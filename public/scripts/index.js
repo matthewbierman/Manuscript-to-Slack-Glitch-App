@@ -9,11 +9,11 @@ const requestReadyStateChange = (request)=>
     }
     else if (request.status == 500)
     {
-      alert("it broked :(");
+      alert("failed to update slack :(");
     }
     else if (request.status == 401)
     {
-      alert("JP is not authorized :(");
+      alert("not authorized :(, invalid key?");
     }
   }
 };
