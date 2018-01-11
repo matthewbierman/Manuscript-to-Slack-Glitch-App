@@ -1,20 +1,15 @@
 Manuscript To Slack
 =========================
 
-Sends a case update from Manuscript to a slack channel
+Sends a case update from Manuscript to a Slack channel
+
+*will also invoke a case lookup if your Slack channel has the Manuscript app installed
 
 Configuration:
 
 1. Generate an incoming webhook to your Slack channel
 
-2. Add the url to the Glitch environment as SLACKURL
-"SLACKURL=https://hooks.slack.com/services/{yourkeys}"
-
-3. Generate a random string and add it to the Glitch enviroment as APIKEY APIKEY=somerandomkey
-
-4. Add your Manuscript site url to the Glitch as MANUSCRIPTURL (include everything before "/cases") MANUSCRIPTURL="https://{yourmanuscriptsite}.fogbugz.com/{f}/"
-
-5. Add a webhook in Manuscript pointed to your Glitch app, make sure to add the api key "https://{your-glitch-app}.glitch.me/api/sendToSlack?apikey={yourapikey}"
+5. Add a webhook in Manuscript pointed to this Glitch app (or your own if you copied it), make sure to add the Slack webhhook URL as an argument "https://post-case-updates-to-slack.glitch.me/api/sendToSlack?slackWebHookURL={your-slack-incoming-webhook-url}"
 
 About Glitch:
 

@@ -1,23 +1,11 @@
 
 const getFormattedMessage = (data)=>
 {
-   var caseLink = process.env.MANUSCRIPTURL + "cases/" + data.casenumber;
-  
-   var message = "Updates to *Case #:(" + data.casenumber + ") <" +  caseLink + "|" + data.title + ">* "
+   
+   var message = "Update to *(Case " + data.casenumber + ") " + data.title + "* "
     + " *Event:* " + data.eventtype
     + " *Status:* " + data.statusname
     + " *Project:* " + data.projectname;
-  
-    if(data.eventtext)
-    {
-      message += " ```" + data.eventtext + "```";
-    }
-  
-   
-  
-  //<https://alert-system.com/alerts/1234|Click here>
-  
-
   
     return message;
 };
@@ -25,19 +13,11 @@ const getFormattedMessage = (data)=>
 const sendToSlack = (request, response)=>
 {
   
-  var validKey = false;
+  var hasSlackURL = false;
  
-  var apiKey = request.query.apikey;
+  var slackWebHookURL= request.query.slackWebHookURL;
   
-  if(apiKey)
-  {
-    if(apiKey == process.env.APIKEY)
-    {
-      validKey = true;
-    }
-  }
-  
-  if(validKey)
+  if(slackWebHookURL)
   {
     const clientRequest = require("request");
 
@@ -49,8 +29,6 @@ const sendToSlack = (request, response)=>
         text: message,
     };
 
-    var destinationURL = process.env.SLACKURL
-
     const handleResponse = (error, clientResponse, body) =>
     {
         if (error)
@@ -58,7 +36,7 @@ const sendToSlack = (request, response)=>
             console.log("error");
             console.log(error);
 
-            response.status(500).send('Something went wrong :(')
+            response.status(500).send('something went wrong :(, is your slack webhook url correct?')
         }
         else
         {
@@ -67,12 +45,11 @@ const sendToSlack = (request, response)=>
 
     };
 
-     clientRequest(destinationURL, { json: true, method:"post", body: requestData }, handleResponse);
+     clientRequest(slackWebHookURL, { json: true, method:"post", body: requestData }, handleResponse);
   }
   else
   {
-    response.status(401).send("nice try");
-    console.log("nice try");
+    response.status(500).send("need slack incoming webhook url");
   }
   
 };
