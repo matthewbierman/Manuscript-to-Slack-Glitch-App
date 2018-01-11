@@ -22,9 +22,9 @@ const btnSendTestClick = ()=>
 {
     var host = location.protocol + '//' + location.hostname;
     var url = host + "/api/sendToSlack";
-    var apikey = document.getElementById("txtAPIKey").value;
+    var slackWebHookURL = document.getElementById("txtSlackURL").value;
   
-    url += "?apikey=" + apikey;
+    url += "?slackWebHookURL=" + slackWebHookURL;
   
     var data = {title:"test from page", casenumber:1000, eventtype:"test event", statusname:"Active", projectname:"Test project", eventtext:"Sample body"};
     var request = new XMLHttpRequest();
@@ -35,20 +35,15 @@ const btnSendTestClick = ()=>
     request.send(JSON.stringify(data));
 };
 
-const documentReady = ()=>
-{
-  document.getElementById("btnSendTest").onclick = btnSendTestClick;
-};
-
 const getQueryStringValue = (name) => {
 
     var url = window.location.search.substring(1);
     var valuePairs = url.split("&");
     var value = null;
   
-    for (index=0;index<values.length;i++) 
+    for (var index=0;index<valuePairs.length;index++) 
     {
-        var valuePair = valuePairs[i].split("=");
+        var valuePair = valuePairs[index].split("=");
         if (valuePair[0] == name) 
         {
             value = valuePair[1];
@@ -58,5 +53,13 @@ const getQueryStringValue = (name) => {
   
   return value;
 }
+
+const documentReady = ()=>
+{
+  document.getElementById("btnSendTest").onclick = btnSendTestClick;
+  document.getElementById("txtSlackURL").value = getQueryStringValue("slackWebHookURL");
+};
+
+
 
 documentReady();
