@@ -9,7 +9,12 @@ Configuration:
 
 1. Generate an incoming webhook to your Slack channel
 
-5. Add a webhook in Manuscript pointed to this Glitch app (or your own if you copied it), make sure to add the Slack webhhook URL as an argument "https://post-case-updates-to-slack.glitch.me/api/sendToSlack?slackWebHookURL={your-slack-incoming-webhook-url}"
+2. Add a webhook in Manuscript pointed to this Glitch app (or your own if you copied it)
+
+    * Both "POST" and "Bundled POST" are supported, I suggest "Bundled POST"
+  
+    * Make sure to add the Slack webhhook URL as an argument "https://post-case-updates-to-slack.glitch.me/api/sendToSlack?slackWebHookURL={your-slack-incoming-webhook-url}"
+  
 
 About Glitch:
 

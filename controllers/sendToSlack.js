@@ -2,12 +2,32 @@
 const getFormattedMessage = (data)=>
 {
    
-   var message = "Update to *(Case " + data.casenumber + ") " + data.title + "* "
-    + " *Event:* " + data.eventtype
-    + " *Status:* " + data.statusname
-    + " *Project:* " + data.projectname;
+   var isArray = typeof data[0] !== "undefined";
+
+   var message = null;
   
-    return message;
+   if(isArray)
+   {
+      var firstEvent = data[0];
+      message = "Updates to *(Case " + firstEvent.casenumber + ") " + firstEvent.title + "* ";
+      for (var i = 0; i < data.length; i++) 
+      { 
+         message += '\n' 
+          + " *Event:* " + data[i].eventtype
+          + " *Status:* " + data[i].statusname
+          + " *Project:* " + data[i].projectname;
+        
+      }
+   }
+   else
+   {
+      message = "Update to *(Case " + data.casenumber + ") " + data.title + "* "
+      + " *Event:* " + data.eventtype
+      + " *Status:* " + data.statusname
+      + " *Project:* " + data.projectname;
+   }
+  
+  return message;
 };
 
 const sendToSlack = (request, response)=>
@@ -22,7 +42,7 @@ const sendToSlack = (request, response)=>
     const clientRequest = require("request");
 
     var data = request.body;
-
+    
     var message = getFormattedMessage(data);
 
     const requestData = {

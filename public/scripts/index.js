@@ -23,10 +23,26 @@ const btnSendTestClick = ()=>
     var host = location.protocol + '//' + location.hostname;
     var url = host + "/api/sendToSlack";
     var slackWebHookURL = document.getElementById("txtSlackURL").value;
+    var sendArray = document.getElementById("chkSendArray").checked;
   
     url += "?slackWebHookURL=" + slackWebHookURL;
   
-    var data = {title:"test from page", casenumber:1000, eventtype:"test event", statusname:"Active", projectname:"Test project", eventtext:"Sample body"};
+    var data = null;
+  
+    if(sendArray)
+    {
+      data =[
+        {title:"test from page", casenumber:1000, eventtype:"test event", statusname:"Created", projectname:"Test project"},
+        {title:"test from page", casenumber:1000, eventtype:"test event2", statusname:"Active", projectname:"Test project"},
+        {title:"test from page", casenumber:1000, eventtype:"test event3", statusname:"Closed", projectname:"Test project"},
+        ];
+    }
+    else
+    {
+      data = {title:"test from page", casenumber:1000, eventtype:"test event", statusname:"Active", projectname:"Test project"};
+    }
+  
+  
     var request = new XMLHttpRequest();
    
     request.open("POST", url, true); 
